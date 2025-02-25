@@ -4,21 +4,37 @@ import numpy as np
 import sys
 import os
 import subprocess
-import streamlit_wordcloud as wordcloud
 import pickle
+import nltk
 
+def install_package(package):
+    try:
+        __import__(package)
+    except ImportError:
+        st.warning(f"Installing {package}...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        st.success(f"{package} installed successfully!")
+
+# Install required packages
+required_packages = ['streamlit_wordcloud', 'nltk']
+for package in required_packages:
+    install_package(package)
+
+# Now import after installation
+import streamlit_wordcloud as wordcloud
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.probability import FreqDist
+
+# Download required NLTK data
 try:
-    from nltk.tokenize import word_tokenize
-    from nltk.corpus import stopwords
-    from nltk.probability import FreqDist
-except ImportError:
-    st.error("NLTK modules not found. Installing required NLTK components...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "nltk"])
-    import nltk
+    nltk.data.find('tokenizers/punkt')
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    st.info("Downloading required NLTK data...")
     nltk.download('punkt')
     nltk.download('stopwords')
-    st.success("NLTK components installed. Please restart the application.")
-    st.stop()
+    st.success("NLTK data downloaded successfully!")
 
 # Main application starts here
 st.title('Hasil Sentimen Analisis pada Ulasan Objek Wisata Sungai Mudal')
