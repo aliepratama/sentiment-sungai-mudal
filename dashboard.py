@@ -33,6 +33,7 @@ try:
 except LookupError:
     st.info("Downloading required NLTK data...")
     nltk.download('punkt')
+    nltk.download('punkt_tab')
     nltk.download('stopwords')
     st.success("NLTK data downloaded successfully!")
 
