@@ -2,4 +2,4 @@ streamlit==1.27.0
 pandas==2.0.3
 numpy==1.24.3
 nltk==3.8.1
-streamlit-wordcloud==0.1.0
+streamlit-wordcloud
